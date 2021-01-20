@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -94,11 +94,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
     //垂直的tablayout
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
-    //数据库room
-    compile('com.github.hotchemi:permissionsdispatcher:3.1.0') { exclude module: 'support-v13' }
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
-    //HelperUtils
-    implementation 'com.github.Andy671:Dachshund-Tab-Layout:v0.3.1'
+
     //跑马灯
     implementation 'com.xj.marqueeView:marqueeView:0.1.20'
     //图片缩放

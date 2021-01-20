@@ -20,24 +20,5 @@ open class BaseViewModel(val repository: SystemRepository):ViewModel() {
      */
     var refreshToken:MutableLiveData<Int> = MutableLiveData()
 
-    /**
-     * 刷新token
-     */
-//    protected fun refreshToken(){
-//        viewModelScope.launch {
-//            var result = repository.refreshToken()
-//
-//            when(result.errno){
-//                0 -> {
-//                    MyMmkv.setValue(Constants.token,result.data)
-//                    refreshToken.postValue(1)
-//                }
-//                665 -> {
-//                    refreshToken.postValue(2)
-//                }
-//
-//            }
-//        }
-//    }
 
 }

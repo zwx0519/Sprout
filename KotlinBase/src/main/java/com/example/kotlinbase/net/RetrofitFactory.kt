@@ -31,7 +31,6 @@ class RetrofitFactory {
             chain -> val request = chain.request()
                 .newBuilder()
                 .addHeader("charset","UTF-8")
-//                .addHeader("X-Nideshop-Token",SpUtils.instance!!.getString("token"))
                 .build()
             chain.proceed(request)
         }
@@ -63,8 +62,6 @@ class RetrofitFactory {
     class LoggingInterceptor:Interceptor{
         override fun intercept(chain: Interceptor.Chain): Response {
             var request = chain.request()
-//            var responseBody = response.peekBody(Long.MAX_VALUE)
-//            Log.i("responseBody",responseBody.string())
             return chain.proceed(request)
         }
     }

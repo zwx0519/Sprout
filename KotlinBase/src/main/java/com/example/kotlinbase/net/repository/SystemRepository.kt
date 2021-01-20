@@ -14,30 +14,10 @@ class SystemRepository {
 
     private lateinit var serviceApi: ServiceApi
 
-    //初始化的方法
+    //TODO 初始化的方法
     init {
+        //在这里调用create 创建ServiceApi进行实例化
         serviceApi = RetrofitFactory.instance.create(ServiceApi::class.java)
+
     }
-
-//    /**
-//     * 商品购买详情下面
-//     */
-//    suspend fun getDetailInfoBottom(id:Int) = withContext(Dispatchers.IO){
-//        serviceApi.getDetailInfoBottom(id)
-//    }
-//
-//    /**
-//     * 加入购物车
-//     */
-//    suspend fun AddCar(map: HashMap<String, String>) = withContext(Dispatchers.IO){
-//        serviceApi.AddCar(map)
-//    }
-//
-//    /**
-//     * 获取购物车列表
-//     */
-//    suspend fun getCar() = withContext(Dispatchers.IO){
-//        serviceApi.getCar()
-//    }
-
 }
