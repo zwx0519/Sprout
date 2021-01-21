@@ -14,8 +14,9 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/mTab_home"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_240"
             android:layout_height="wrap_content"
+            app:tabMode="fixed"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/mVp_home"
             tools:ignore="MissingConstraints" />
