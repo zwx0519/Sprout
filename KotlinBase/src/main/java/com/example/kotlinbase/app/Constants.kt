@@ -9,7 +9,7 @@ class Constants {
     companion object{
         
         //基础地址
-        val BASE_URL:String = "https://cdplay.cn/api/"
+        val BASE_URL:String = "http://sprout.cdwan.cn/api/"
 
         //网络缓存的地址
      //   val PATH_DATA = MyApp.app!!.cacheDir.absolutePath + File.separator + "data"

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.sprout.R
 import com.sprout.ui.oasis.home.local.LocalFragment
 
+//TODO 首页同城页面
 class AttentionFragment : Fragment() {
 
     //采用伴生对象 companion object==static 只能创建一次
