@@ -1,5 +1,6 @@
 package com.sprout.ui.oasis.login
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +12,22 @@ import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import com.example.basemvvm.utils.ToastUtils
+import com.sprout.MainActivity
 import com.sprout.R
+import com.sprout.ui.oasis.OasisActivity
+import com.sprout.utils.CountDownTimerUtils
 import com.sprout.utils.CustomVideoView
+import com.sprout.utils.VerifyCodeView
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     //创建播放视频的控件对象
     private var videoview: CustomVideoView? = null
+
+    //验证码
+    var disposable : Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +69,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         //结束位置
         var endPos = string.indexOf( "|" )
         val spannableString = SpannableString(string)
+        //富文本颜色
         spannableString.setSpan( ForegroundColorSpan( Color.parseColor( "#FF9800" ) ), startPos+1, endPos, Spanned.SPAN_INCLUSIVE_INCLUSIVE );//设置EZ的背景色
         spannableString.setSpan( ForegroundColorSpan( Color.parseColor( "#FF9800" ) ), endPos+1,spannableString.length , Spanned.SPAN_INCLUSIVE_INCLUSIVE );//设置EZ前景色，也就是字体颜色
         tv_register_text.setText( spannableString )
@@ -70,6 +80,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private fun initClick() {
         //手机登录注册
         btn_register_phone_login.setOnClickListener(this)
+        //其他号码登录
+        tv_rehister_else.setOnClickListener(this)
         //微博
         iv_register_wb.setOnClickListener(this)
         //微信
@@ -83,6 +95,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             //手机登录注册
             R.id.btn_register_phone_login -> {
                 initPhone_Login()
+            }
+            //其他号码登录
+            R.id.tv_rehister_else -> {
+                initElse()
             }
             //微博
             R.id.iv_register_wb -> {
@@ -99,35 +115,72 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun initPhone_Login() {
+    //TODO 其他号码登录
+    private fun initElse() {
         btn_register_phone_login.setText("获取短信验证码")
         //显示手机号
         ll_register_phone.visibility = View.VISIBLE
-        var et_phone = et_register_phone.text.toString()
-        if(!TextUtils.isEmpty(et_phone)){
-            if(et_phone.length == 11){
-                //发送验证码
-                initCode()
-            }else{
-                ToastUtils.s(this,getString(R.string.register_phone_code))
+        //隐藏本机和其他
+        tv_rehister_phone_local.visibility = View.GONE
+        tv_rehister_else.visibility = View.GONE
+    }
+
+    //TODO 登录
+    private fun initPhone_Login() {
+        var btn_phone = btn_register_phone_login.text.toString()
+        if(btn_phone.equals("本机号码一键登录")){
+            //跳转
+            startActivity(Intent(this,OasisActivity ::class.java))
+        }
+        if(btn_phone.equals("获取短信验证码")) {
+            var et_phone = et_register_phone.text.toString()
+            if (!TextUtils.isEmpty(et_phone)) {
+                if (et_phone.length == 11) {
+                    //发送验证码
+                    initCode()
+                } else {
+                    ToastUtils.s(this, getString(R.string.register_phone_code))
+                }
+            } else {
+                ToastUtils.s(this, getString(R.string.register_phone))
             }
-        }else{
-            ToastUtils.s(this,getString(R.string.register_phone))
         }
     }
 
-    //发送验证码
+    //TODO 发送验证码
     private fun initCode() {
-
+        tv_rehister_else.visibility = View.VISIBLE
+        verify_code_view_register.visibility = View.VISIBLE
+        tv_rehister_else.setTextColor(Color.WHITE)
+        tv_rehister_else.setText("输入验证码")
+        CountDownTimerUtils(btn_register_phone_login, 60000, 1000).start()
+        //监听验证码
+        initClickCode()
     }
 
-    //返回重启加载
+    //TODO 监听验证码
+    private fun initClickCode() {
+        verify_code_view_register.setInputCompleteListener(object :
+            VerifyCodeView.InputCompleteListener {
+            override fun inputComplete() {
+                var editContent = verify_code_view_register.editContent
+                if(editContent!!.length == 6){
+                    //跳转
+                    startActivity(Intent(this@RegisterActivity,OasisActivity::class.java))
+                }
+            }
+
+            override fun invalidContent() {}
+        })
+    }
+
+    //TODO 返回重启加载
     override fun onRestart() {
-        initView()
         super.onRestart()
+        initView()
     }
 
-    //防止锁屏或者切出的时候，音乐在播放
+    //TODO 防止锁屏或者切出的时候，音乐在播放
     override fun onStop() {
         videoview!!.stopPlayback()
         super.onStop()

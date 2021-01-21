@@ -35,25 +35,17 @@ class IntroductionActivity : AppCompatActivity() {
         guidance = SpUtils.instance!!.getString("guidance")
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!TextUtils.isEmpty(guidance)) {
-            //跳转到注册界面
-            initTimerRe()
-        } else {
-            onWindowFocusChanged(hasWindowFocus())
-        }
-    }
-
     //TODO 自动弹出pw
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if(hasFocus){
             if (TextUtils.isEmpty(guidance)) {
                 initPw()
+            }else{
+                //跳转到注册界面
+                initTimerRe()
             }
         }
-
     }
 
     //TODO 弹出弹窗
@@ -87,7 +79,6 @@ class IntroductionActivity : AppCompatActivity() {
             initTimerRe()
             val ok = "已经进入过引导页"
             SpUtils.instance!!.setValue("guidance", ok)
-            finishAndRemoveTask()
         }
 
         //在按钮的下方弹出  无偏移 第一种方式
@@ -118,11 +109,18 @@ class IntroductionActivity : AppCompatActivity() {
 
     //TODO 关闭阴影
     fun initPwNo() {
-        popupWindow!!.setOnDismissListener { ->
-            //关闭阴影
-            val attributes = window.attributes
-            attributes.alpha = 1f
-            window.attributes = attributes
+        //关闭阴影
+        val attributes = window.attributes
+        attributes.alpha = 1f
+        window.attributes = attributes
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(popupWindow != null && popupWindow!!.isShowing()){
+            popupWindow!!.dismiss()
+            popupWindow = null
         }
     }
 
