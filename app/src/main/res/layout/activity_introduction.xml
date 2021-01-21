@@ -4,11 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IntroductionActivity">
-    <Button
+    android:id="@+id/mCl_introduction"
+    tools:context=".ui.oasis.IntroductionActivity">
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/btn_intro"
-        android:text="跳转"
-        />
+        android:layout_height="@dimen/dp_400"
+        android:src="@drawable/splash_bg"
+        android:layout_marginTop="@dimen/dp_120"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/splash_weibo"
+        android:layout_marginBottom="@dimen/dp_50"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

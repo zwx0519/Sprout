@@ -20,7 +20,7 @@ class MyApp: Application() {
         @JvmField
         var app: MyApp? = null
         @JvmStatic
-        var map: java.util.HashMap<String, Any>? = null
+        var map: HashMap<String, Any>? = null
     }
 
 }
