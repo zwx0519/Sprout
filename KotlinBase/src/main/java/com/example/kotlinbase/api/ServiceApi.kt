@@ -1,5 +1,7 @@
 package com.shop.api
 
+import com.example.kotlinbase.bean.issue.Issue_BrandBean
+import com.example.kotlinbase.bean.issue.Issue_GoodBean
 import com.shop.net.BaseResp
 import com.sprout.bean.home.local.Local_ChannelBean
 import retrofit2.http.GET
@@ -15,12 +17,10 @@ interface ServiceApi {
     @GET("channel/channel")
     suspend fun getLocal_Channel() :BaseResp<List<Local_ChannelBean>>
 
+    @GET("tag/brand")
+    suspend fun getBrand(@Query("page") page:Int, @Query("size") size:Int):BaseResp<Issue_BrandBean>
 
-    //@GET("tag/brand")
-    //suspend fun getBrand(@Query("page") page:Int, @Query("size") size:Int):BaseResp<BrandData>
-
-  //  @GET("tag/good")
-  //  suspend fun getGood(@Query("page") page:Int, @Query("size") size:Int):BaseResp<GoodData>
-
+    @GET("tag/good")
+    suspend fun getGood(@Query("page") page:Int, @Query("size") size:Int):BaseResp<Issue_GoodBean>
 
 }

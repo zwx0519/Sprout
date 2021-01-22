@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 30
@@ -22,14 +23,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kapt {
+        generateStubs = true
+    }
+
     //开启dataBinding功能支持
     dataBinding {
         enabled = true
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 }
 
@@ -67,4 +80,16 @@ dependencies {
     //viewModelScope
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    //dataBinding
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    // 数据绑定访问BR的环境
+    kapt  "com.android.databinding:compiler:3.5.0"
+
+    //本地相机相册选择图片
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
+    //banner
+    implementation 'com.youth.banner:banner:1.4.9'
+    //图片的放大缩小
+    implementation 'com.bm.photoview:library:1.4.1'
 }

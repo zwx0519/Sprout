@@ -55,6 +55,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        mDataBinding.mTabHome.getTabAt(0)!!.setIcon(R.drawable.menu_attention_select);
+        mDataBinding.mTabHome.getTabAt(1)?.setIcon(R.drawable.menu_recommend_select)
+        mDataBinding.mTabHome.getTabAt(2)?.setIcon(R.drawable.menu_local_select)
+    }
     fun initClick() {
         //在这里插入代码片
         mDataBinding.mTabHome.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
@@ -71,9 +77,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>
 //                        )
 //                    }
 //                }
-                mDataBinding.mTabHome.getTabAt(0)!!.setIcon(R.drawable.menu_attention_select);
-                mDataBinding.mTabHome.getTabAt(1)?.setIcon(R.drawable.menu_recommend_select)
-                mDataBinding.mTabHome.getTabAt(2)?.setIcon(R.drawable.menu_local_select)
+
             }
             override fun onTabSelected(tab: TabLayout.Tab) {
 //                if (tab.customView!=null){
@@ -88,12 +92,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>
 //                        )
 //                    }
 //                }
-                if(tab.isSelected){
-
+                if(tab.position==0){
+                    mDataBinding.mTabHome.getTabAt(0)?.setIcon(R.drawable.menu_attention_select)
+                }else if(tab.position==1){
+                    mDataBinding.mTabHome.getTabAt(1)?.setIcon(R.drawable.menu_recommend_select)
+                }else{
+                    mDataBinding.mTabHome.getTabAt(2)?.setIcon(R.drawable.menu_local_select)
                 }
-                mDataBinding.mTabHome.getTabAt(0)!!.setIcon(R.drawable.menu_attention_select);
-                mDataBinding.mTabHome.getTabAt(1)?.setIcon(R.drawable.menu_recommend_select)
-                mDataBinding.mTabHome.getTabAt(2)?.setIcon(R.drawable.menu_local_select)
+
             }
         })
     }

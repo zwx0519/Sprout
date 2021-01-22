@@ -26,4 +26,14 @@ class SystemRepository {
     suspend fun getLocal_Channel() = withContext(Dispatchers.IO) {
         serviceApi.getLocal_Channel()
     }
+
+    //TODO 获取品牌数据
+    suspend fun getBrand(page:Int,size:Int) = withContext(Dispatchers.IO){
+        serviceApi.getBrand(page,size)
+    }
+
+    //TODO 获取商品数据
+    suspend fun getGood(page:Int,size:Int) = withContext(Dispatchers.IO){
+        serviceApi.getGood(page,size)
+    }
 }

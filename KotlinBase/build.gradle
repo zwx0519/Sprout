@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
 }
 android {
     compileSdkVersion 30
@@ -40,10 +39,6 @@ android {
     buildFeatures {
         dataBinding true
     }
-
-    kapt {
-        generateStubs = true
-    }
     
     //开启dataBinding功能支持
     dataBinding {
@@ -78,8 +73,7 @@ dependencies {
     //viewModelScope
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-    // 数据绑定访问BR的环境
-    kapt "com.android.databinding:compiler:3.5.0"
+
     //mmkv数据保存
     implementation 'com.tencent:mmkv-static:1.0.23'
     //侧滑菜单 recyclerview  协调者布局
