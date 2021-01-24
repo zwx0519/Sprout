@@ -11,10 +11,12 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import com.example.basemvvm.utils.SpUtils
 import com.example.basemvvm.utils.ToastUtils
 import com.sprout.MainActivity
 import com.sprout.R
 import com.sprout.ui.oasis.OasisActivity
+import com.sprout.ui.oasis.guidance.SexActivity
 import com.sprout.utils.CountDownTimerUtils
 import com.sprout.utils.CustomVideoView
 import com.sprout.utils.VerifyCodeView
@@ -26,13 +28,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     //创建播放视频的控件对象
     private var videoview: CustomVideoView? = null
 
-    //验证码
-    var disposable : Disposable? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
         //加载视频
         initView()
         //富文本
@@ -47,12 +45,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         videoview = findViewById(R.id.videoview_register) as CustomVideoView
 
         //设置播放加载路径
-
         videoview!!.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login_bg))
         //模拟器地址
         //videoview!!.setVideoPath(Environment.getExternalStorageDirectory().toString() + "/Pictures/boy.mp4")
         //网络地址
-//      videoview!!.setVideoPath( "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4" )
+        //videoview!!.setVideoPath( "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4" )
 
         //播放
         videoview!!.start()
@@ -129,8 +126,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private fun initPhone_Login() {
         var btn_phone = btn_register_phone_login.text.toString()
         if(btn_phone.equals("本机号码一键登录")){
+            val thislogin = "已经本机登录"
+            SpUtils.instance!!.setValue("thislogin",thislogin)
             //跳转
-            startActivity(Intent(this,OasisActivity ::class.java))
+            startActivity(Intent(this, SexActivity ::class.java))
+            finish()
         }
         if(btn_phone.equals("获取短信验证码")) {
             var et_phone = et_register_phone.text.toString()
@@ -165,8 +165,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             override fun inputComplete() {
                 var editContent = verify_code_view_register.editContent
                 if(editContent!!.length == 6){
+                    val elselogin = "已经其他登录"
+                    SpUtils.instance!!.setValue("elselogin",elselogin)
                     //跳转
-                    startActivity(Intent(this@RegisterActivity,OasisActivity::class.java))
+                    startActivity(Intent(this@RegisterActivity,SexActivity::class.java))
                 }
             }
 

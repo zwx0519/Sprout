@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.sprout.ui.oasis.IntroductionActivity
+import com.sprout.ui.oasis.guidance.IntroductionActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),View.OnClickListener{
@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_oasis ->{
-                var intent=Intent(this,IntroductionActivity ::class.java)
+                var intent=Intent(this,
+                    IntroductionActivity::class.java)
                 startActivity(intent)
             }
         }

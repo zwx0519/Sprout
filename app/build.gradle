@@ -92,4 +92,6 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.9'
     //图片的放大缩小
     implementation 'com.bm.photoview:library:1.4.1'
+
+
 }

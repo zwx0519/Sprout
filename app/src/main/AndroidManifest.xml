@@ -17,18 +17,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.oasis.issue.TagsActivity"></activity>
-        <activity android:name=".ui.oasis.login.RegisterActivity"></activity>
+        <activity android:name=".ui.oasis.guidance.Interset_Recommend_Activity"/>
+        <activity android:name=".ui.oasis.guidance.InterestActivity" />
+        <activity android:name=".ui.oasis.guidance.SexActivity" />
+        <activity android:name=".ui.oasis.issue.TagsActivity" />
+        <activity android:name=".ui.oasis.login.RegisterActivity" />
         <activity android:name=".ui.oasis.issue.IssueActivity" />
         <activity android:name=".ui.oasis.OasisActivity">
+
+        </activity>
+        <activity android:name=".ui.oasis.guidance.IntroductionActivity" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.oasis.IntroductionActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

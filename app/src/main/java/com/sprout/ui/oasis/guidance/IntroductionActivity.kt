@@ -1,4 +1,4 @@
-package com.sprout.ui.oasis
+package com.sprout.ui.oasis.guidance
 
 import android.content.Intent
 import android.graphics.Color

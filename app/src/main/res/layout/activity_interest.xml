@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.oasis.guidance.InterestActivity">
+
+    <TextView
+        android:id="@+id/tv_myInterest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:text="你的兴趣"
+        android:textColor="#000"
+        android:textSize="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_interest_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:text="选择越多，推荐越丰富"
+        android:textSize="@dimen/dp_18"
+        app:layout_constraintTop_toBottomOf="@id/tv_myInterest" />
+
+
+    <GridLayout
+        android:id="@+id/tab_interest"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:columnCount="2"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintBottom_toTopOf="@id/btn_interest_next_step"
+        app:layout_constraintTop_toBottomOf="@id/tv_interest_select">
+
+
+        <CheckBox
+            android:id="@+id/btn_interest_beauty_makeup"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="美妆" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_fashion"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="时尚" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_travel"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="旅行" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_fine_food"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="美食" />
+              
+
+        <CheckBox
+            android:id="@+id/btn_interest_star"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="明星" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_house"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="家居" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_quadratic_element"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="二次元" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_adorable_pet"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="萌宠" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_exercise"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="运动" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_art"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="艺术" />
+
+        <CheckBox
+            android:id="@+id/btn_interest_photography"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/selector_interest"
+            android:button="@null"
+            android:gravity="center"
+            android:text="摄影" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btn_interest_next_step"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_margin="@dimen/dp_40"
+        android:background="@drawable/icon_wow_pay_send_button_pressed"
+        android:text="下一步"
+        android:textColor="#fff"
+        android:textSize="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

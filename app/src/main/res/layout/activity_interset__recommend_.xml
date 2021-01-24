@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.oasis.guidance.Interset_Recommend_Activity">
+
+    <TextView
+        android:id="@+id/tv_myInterest_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:text="你可能感兴趣的人"
+        android:textColor="#000"
+        android:textSize="@dimen/dp_30"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_interest_recommend_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:text="基于你选择的兴趣分类推荐"
+        android:textSize="@dimen/dp_18"
+        app:layout_constraintBottom_toTopOf="@+id/mRlv_interset_recommend"
+        app:layout_constraintTop_toBottomOf="@id/tv_myInterest_recommend" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/mRlv_interset_recommend"
+        app:layout_constraintTop_toBottomOf="@+id/tv_interest_recommend_select"
+        app:layout_constraintBottom_toTopOf="@+id/btn_interest_recommend_next_step"
+        />
+    <Button
+        android:id="@+id/btn_interest_recommend_next_step"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_margin="@dimen/dp_40"
+        android:background="@drawable/icon_wow_pay_send_button_pressed"
+        android:text="下一步"
+        android:textColor="#fff"
+        android:textSize="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@+id/mRlv_interset_recommend"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
