@@ -9,7 +9,7 @@
         android:layout_height="@dimen/dp_400"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="centerCrop"/>
-    <FrameLayout
+    <com.example.kotlinbase.utils.TagsLayout
         android:id="@+id/layout_tags"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_400"

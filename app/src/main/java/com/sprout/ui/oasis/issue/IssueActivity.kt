@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.kotlinbase.bean.issue.ImgData
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
@@ -15,6 +16,8 @@ import com.sprout.databinding.ActivityIssueBinding
 import com.sprout.utils.GlideEngine
 import com.sprout.viewmodel.oasis.issue.IssueViewModel
 import kotlinx.android.synthetic.main.activity_issue.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 //TODO 动态页面图片的编辑
 class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
@@ -24,6 +27,9 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
     var imgList:MutableList<String> = mutableListOf()
     var fragments:MutableList<ImageFragment> = mutableListOf()
     lateinit var fAdapter:FAdapter
+
+    //当前界面tag相关数据
+    var imgArray:MutableList<ImgData> = mutableListOf()
 
     override fun initView() {
 
@@ -53,6 +59,13 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
         //点击返回
         tv_issue_return.setOnClickListener{
             finishAndRemoveTask()
+        }
+
+        //点击下一步
+        tv_issue_next.setOnClickListener {
+            var intent = Intent(this,SubmitMoreActivity::class.java)
+            intent.putExtra("data",decodeImgs())
+            startActivity(intent)
         }
     }
 
@@ -87,7 +100,10 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
                 //把选中的图片插入到列表
                 for(i in 0 until selectList.size){
                     imgList.add(selectList.get(i).path) //保留图片的绝对路径
-                    var fragment = ImageFragment.instance(i,selectList.get(i).path)
+                    //图片数据的初始化
+                    var imgData = ImgData(selectList.get(i).path, mutableListOf())
+                    imgArray.add(imgData)
+                    var fragment = ImageFragment.instance(i,selectList.get(i).path,imgData.tags)
                     fragments.add(fragment)
                 }
                 fAdapter.notifyDataSetChanged()
@@ -108,6 +124,32 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
             else -> {
             }
         }
+    }
+
+    //TODO json结构原生的封装
+    private fun decodeImgs():String{
+        var imgs = JSONArray()
+        for(i in 0 until imgArray.size){
+            var item = imgArray[i]
+            var imgJson = JSONObject()  //图片的json结构
+            imgJson.put("path",item.path)
+            var tags = JSONArray()
+            for(j in 0 until item.tags.size){
+                var tag = item.tags[j]
+                var tagJson = JSONObject()
+                tagJson.put("x",tag.x)
+                tagJson.put("y",tag.y)
+                tagJson.put("type",tag.type)
+                tagJson.put("name",tag.name)
+                tagJson.put("lng",tag.lng)
+                tagJson.put("lat",tag.lat)
+                tags.put(tagJson)
+            }
+            imgJson.put("tags",tags)
+            imgs.put(imgJson)
+        }
+        return imgs.toString()
+
     }
 
     //TODO 内部适配器

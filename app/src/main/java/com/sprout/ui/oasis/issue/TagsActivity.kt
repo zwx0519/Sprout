@@ -38,7 +38,7 @@ class TagsActivity : BaseActivity<TagsViewModel, ActivityTagsBinding>
         goodList = mutableListOf()
         goodAdapter = Issue_GoodAdapter(this,goodList,goodArr,GoodClick())
 
-       // mDataBinding.tagClick = TagsClick()
+        mDataBinding.tagClick = TagsClick()
     }
 
     override fun initVM() {
