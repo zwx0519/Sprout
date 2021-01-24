@@ -17,6 +17,7 @@ class TagsViewModel: BaseViewModel(Injection.repository){
     var gpage = 0
     var size = 10
 
+    //品牌数据
     fun getBrand(){
         viewModelScope.launch {
             var result = repository.getBrand(bpage,size)
@@ -26,6 +27,7 @@ class TagsViewModel: BaseViewModel(Injection.repository){
         }
     }
 
+    //商品数据
     fun getGood(){
         viewModelScope.launch {
             var result = repository.getGood(gpage,size)

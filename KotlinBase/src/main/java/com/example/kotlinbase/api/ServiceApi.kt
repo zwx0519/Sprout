@@ -20,7 +20,7 @@ interface ServiceApi {
     @GET("tag/brand")
     suspend fun getBrand(@Query("page") page:Int, @Query("size") size:Int):BaseResp<Issue_BrandBean>
 
-    @GET("tag/good")
+    @GET("tag/goods")
     suspend fun getGood(@Query("page") page:Int, @Query("size") size:Int):BaseResp<Issue_GoodBean>
 
 }
