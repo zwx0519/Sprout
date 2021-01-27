@@ -24,6 +24,8 @@
                     android:id="@+id/mTab_home_local"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:tabIndicatorColor="@color/green_home"
+                    app:tabIndicator="@drawable/tab_indicator"
                     app:layout_constraintBottom_toTopOf="@+id/mVp_home_local"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

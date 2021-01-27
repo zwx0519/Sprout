@@ -28,13 +28,14 @@ class TagsActivity : BaseActivity<TagsViewModel, ActivityTagsBinding>
 
     override fun initView() {
         mRlv_tags.layoutManager = LinearLayoutManager(this)
+
         var brandArr = SparseArray<Int>()
         brandArr.put(R.layout.layout_brand_item, BR.brandData)
         brandList = mutableListOf()
         brandAdapter = Issue_BrandAdapter(this,brandList,brandArr,BrandClick())
 
         var goodArr = SparseArray<Int>()
-        brandArr.put(R.layout.layout_brand_item, BR.goodData)
+        goodArr.put(R.layout.layout_good_item, BR.goodData)
         goodList = mutableListOf()
         goodAdapter = Issue_GoodAdapter(this,goodList,goodArr,GoodClick())
 
@@ -72,8 +73,8 @@ class TagsActivity : BaseActivity<TagsViewModel, ActivityTagsBinding>
             intent.putExtra("name",data.name)
             intent.putExtra("id",data.id)
             setResult(2,intent)
+            finish()
         }
-
     }
 
     override fun initData() {
