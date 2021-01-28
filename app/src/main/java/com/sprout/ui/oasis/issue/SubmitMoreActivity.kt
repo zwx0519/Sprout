@@ -108,7 +108,6 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
                     //imgs.removeLast()
                 }
                 imgAdapter.notifyDataSetChanged()
-
             }
 
             else -> {

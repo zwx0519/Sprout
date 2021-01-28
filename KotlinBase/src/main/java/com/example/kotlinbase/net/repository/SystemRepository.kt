@@ -36,4 +36,14 @@ class SystemRepository {
     suspend fun getGood(page:Int,size:Int) = withContext(Dispatchers.IO){
         serviceApi.getGood(page,size)
     }
+
+    //TODO 注册
+    suspend fun getRegister(userName: String, userPsw: String, imei: String, lng: String, lat: String) = withContext(Dispatchers.IO){
+        serviceApi.register(userName, userPsw, imei, lng, lat)
+    }
+
+    //TODO 登录
+    suspend fun getLogin(userName: String, userPsw: String) = withContext(Dispatchers.IO){
+        serviceApi.login(userName, userPsw)
+    }
 }

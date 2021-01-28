@@ -22,25 +22,25 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>
     var pagerAdapter: HomeFragment.ViewPage? = null
 
     override fun initView() {
-//        mDataBinding.mTabMe.getTabAt(0)?.setIcon(R.drawable.selector_status)
-//        mDataBinding.mTabMe.getTabAt(1)?.setIcon(R.drawable.selector_like)
-//        mDataBinding.mTabMe.getTabAt(2)?.setIcon(R.drawable.selector_favorite)
-//        mDataBinding.mTabMe.getTabAt(3)?.setIcon(R.drawable.selector_at)
+        mDataBinding.mTabMe.getTabAt(0)?.setIcon(R.drawable.selector_status)
+        mDataBinding.mTabMe.getTabAt(1)?.setIcon(R.drawable.selector_like)
+        mDataBinding.mTabMe.getTabAt(2)?.setIcon(R.drawable.selector_favorite)
+        mDataBinding.mTabMe.getTabAt(3)?.setIcon(R.drawable.selector_at)
 
-//        //设置适配器
-//        pagerAdapter = HomeFragment.ViewPage(childFragmentManager, mViewModel.fragments)
-//        //绑定适配器
-//        mDataBinding.mVpMe.adapter = pagerAdapter
-//        //设置ViewPager和Tab联动
-//        mDataBinding.mTabMe.setupWithViewPager(mDataBinding.mVpMe)
+        //设置适配器
+        pagerAdapter = HomeFragment.ViewPage(childFragmentManager, mViewModel.fragments)
+        //绑定适配器
+        mDataBinding.mVpMe.adapter = pagerAdapter
+        //设置ViewPager和Tab联动
+        mDataBinding.mTabMe.setupWithViewPager(mDataBinding.mVpMe)
     }
 
     override fun onResume() {
         super.onResume()
-//        mDataBinding.mTabMe.getTabAt(0)?.setIcon(R.drawable.selector_status)
-//        mDataBinding.mTabMe.getTabAt(1)?.setIcon(R.drawable.selector_like)
-//        mDataBinding.mTabMe.getTabAt(2)?.setIcon(R.drawable.selector_favorite)
-//        mDataBinding.mTabMe.getTabAt(3)?.setIcon(R.drawable.selector_at)
+        mDataBinding.mTabMe.getTabAt(0)?.setIcon(R.drawable.selector_status)
+        mDataBinding.mTabMe.getTabAt(1)?.setIcon(R.drawable.selector_like)
+        mDataBinding.mTabMe.getTabAt(2)?.setIcon(R.drawable.selector_favorite)
+        mDataBinding.mTabMe.getTabAt(3)?.setIcon(R.drawable.selector_at)
     }
 
     override fun initVM() {
