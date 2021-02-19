@@ -39,7 +39,7 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
     override fun initVM() {
         initListener()//点击事件
 
-        imgList = mutableListOf()
+        imgList = mutableListOf()//集合
 
         //设置适配器
         fAdapter = FAdapter(supportFragmentManager)
@@ -103,17 +103,19 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
                     //图片数据的初始化
                     var imgData = ImgData(selectList.get(i).path, mutableListOf())
                     imgArray.add(imgData)
+                    //添加fragment
                     var fragment = ImageFragment.instance(i,selectList.get(i).path,imgData.tags)
-                    fragments.add(fragment)
+                    fragments.add(fragment)//对实例的引用
                 }
                 fAdapter.notifyDataSetChanged()
             }
-            //处理TAG设置返回
+            //处理TAG设置返回  标签数据通过回传值来传入
             CODE_TAG -> {
                 if(resultCode == 1){
                     var id = data!!.getIntExtra("id",0)
                     var name = data!!.getStringExtra("name")//获得名字
                     var pos = mVp_issue.currentItem//切换到某一页
+                    //调用fragment的方法
                     fragments.get(pos).addTagsToView(1,id,name!!)//传参
                 }else if(resultCode == 2){
                     var id = data!!.getIntExtra("id",0)
@@ -128,12 +130,12 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
 
     //TODO json结构原生的封装
     private fun decodeImgs():String{
-        var imgs = JSONArray()
-        for(i in 0 until imgArray.size){
+        var imgs = JSONArray()//创建一个json数组
+        for(i in 0 until imgArray.size){// imgArray当前界面tag相关数据 类型是ImgData
             var item = imgArray[i]
             var imgJson = JSONObject()  //图片的json结构
-            imgJson.put("path",item.path)
-            var tags = JSONArray()
+            imgJson.put("path",item.path) //获取地址
+            var tags = JSONArray()//创建一个json数组
             for(j in 0 until item.tags.size){
                 var tag = item.tags[j]
                 var tagJson = JSONObject()
@@ -154,7 +156,6 @@ class IssueActivity: BaseActivity<IssueViewModel, ActivityIssueBinding>
 
     //TODO 内部适配器
     inner class FAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
-
         override fun getCount(): Int {
             return fragments.size
         }

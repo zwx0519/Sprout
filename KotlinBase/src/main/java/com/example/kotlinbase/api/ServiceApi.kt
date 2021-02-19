@@ -2,9 +2,13 @@ package com.shop.api
 
 import com.example.kotlinbase.bean.issue.Issue_BrandBean
 import com.example.kotlinbase.bean.issue.Issue_GoodBean
+import com.example.kotlinbase.bean.issue.tag.SubmitTrendsData
+import com.example.kotlinbase.bean.issue.tag.ThemeData
+import com.example.kotlinbase.bean.issue.tag.TrendsData
 import com.example.kotlinbase.bean.login.RegisterBean
 import com.shop.net.BaseResp
 import com.sprout.bean.home.local.Local_ChannelBean
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ServiceApi {
@@ -38,4 +42,19 @@ interface ServiceApi {
     @FormUrlEncoded
     suspend fun login(@Field("username")userName :String, @Field("password")userPsw:String)
             :BaseResp<RegisterBean>
+
+    //主题数据
+    @GET("theme/getTheme")
+    suspend fun getTheme():BaseResp<List<ThemeData>>
+
+    //提交动态数据
+    @POST("trends/submitTrends")
+    suspend fun submitTrends(@Body trends: RequestBody):BaseResp<SubmitTrendsData>
+
+    // 获取动态数据
+    @GET("trends/trendsList")
+    suspend fun trendsList(@Query("command") command:Int,
+                           @Query("channelid") channelid:Int,
+                           @Query("page") page:Int,
+                           @Query("size") size: Int):BaseResp<List<TrendsData>>
 }

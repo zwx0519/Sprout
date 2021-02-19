@@ -3,6 +3,9 @@ package com.sprout.ui.oasis.issue
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.SparseArray
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinbase.bean.issue.Issue_BrandBean
@@ -14,67 +17,35 @@ import com.sprout.R
 import com.sprout.adapter.oasis.issue.Issue_BrandAdapter
 import com.sprout.adapter.oasis.issue.Issue_GoodAdapter
 import com.sprout.databinding.ActivityTagsBinding
+import com.sprout.ui.oasis.issue.tags.AdressFragment
+import com.sprout.ui.oasis.issue.tags.BrandFragment
+import com.sprout.ui.oasis.issue.tags.GoodsFragment
 import com.sprout.viewmodel.oasis.issue.TagsViewModel
 import kotlinx.android.synthetic.main.activity_tags.*
 
+/**
+ * 用来显示标签列表的页面
+ */
 class TagsActivity : BaseActivity<TagsViewModel, ActivityTagsBinding>
     (R.layout.activity_tags,TagsViewModel::class.java){
 
-    lateinit var brandList:MutableList<Issue_BrandBean.Data>
-    lateinit var brandAdapter:Issue_BrandAdapter
-
-    lateinit var goodList:MutableList<Issue_GoodBean.Data>
-    lateinit var goodAdapter: Issue_GoodAdapter
+    var fragments:MutableList<Fragment> = mutableListOf()
+    var titles:List<String> = listOf("品牌","商品","地址")
 
     override fun initView() {
-        mRlv_tags.layoutManager = LinearLayoutManager(this)
 
-        var brandArr = SparseArray<Int>()
-        brandArr.put(R.layout.layout_brand_item, BR.brandData)
-        brandList = mutableListOf()
-        brandAdapter = Issue_BrandAdapter(this,brandList,brandArr,BrandClick())
-
-        var goodArr = SparseArray<Int>()
-        goodArr.put(R.layout.layout_good_item, BR.goodData)
-        goodList = mutableListOf()
-        goodAdapter = Issue_GoodAdapter(this,goodList,goodArr,GoodClick())
-
-        mDataBinding.tagClick = TagsClick()
     }
 
+    //TODO 初始化标签对应的页面
     override fun initVM() {
-        mViewModel.bList.observe(this, Observer {
-            brandList.clear()
-            brandList.addAll(it.data)
-            mRlv_tags.adapter = brandAdapter
-        })
-
-        mViewModel.gList.observe(this, Observer {
-            goodList.clear()
-            goodList.addAll(it.data)
-            mRlv_tags.adapter = goodAdapter
-        })
-    }
-
-    //TODO 品牌内部类
-    inner class BrandClick: IItemClick<Issue_BrandBean.Data> {
-        override fun itemClick(data: Issue_BrandBean.Data) {
-            intent.putExtra("name",data.name)
-            intent.putExtra("id",data.id)
-            setResult(1,intent)
-            finish()
-        }
-
-    }
-
-    //TODO 商品内部类
-    inner class GoodClick:IItemClick<Issue_GoodBean.Data>{
-        override fun itemClick(data: Issue_GoodBean.Data) {
-            intent.putExtra("name",data.name)
-            intent.putExtra("id",data.id)
-            setResult(2,intent)
-            finish()
-        }
+        fragments.add(BrandFragment(1))
+        fragments.add(GoodsFragment(2))
+        fragments.add(AdressFragment(3))
+        tab_tags.setupWithViewPager(viewPager)
+        tab_tags.addTab(tab_tags.newTab())
+        tab_tags.addTab(tab_tags.newTab())
+        tab_tags.addTab(tab_tags.newTab())
+        viewPager.adapter = MyFragmentAdapter(supportFragmentManager)
     }
 
     override fun initData() {
@@ -85,30 +56,18 @@ class TagsActivity : BaseActivity<TagsViewModel, ActivityTagsBinding>
 
     }
 
-    inner class TagsClick{
-        fun click(type:Int){
-            when(type){
-                1->{
-                    if(brandList.size == 0){
-                        mViewModel.getBrand()
-                    }else{
-                        mRlv_tags.adapter = brandAdapter
-                    }
-                }
-                2->{
-                    if(goodList.size == 0){
-                        mViewModel.getGood()
-                    }else{
-                        mRlv_tags.adapter = goodAdapter
-                    }
-                }
-                3->{
+    //TODO 内部适配器
+    inner class MyFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+        override fun getCount(): Int {
+            return fragments.size
+        }
 
-                }
-                4->{
+        override fun getItem(position: Int): Fragment {
+            return fragments.get(position)
+        }
 
-                }
-            }
+        override fun getPageTitle(position: Int): CharSequence? {
+            return titles[position].toString()
         }
     }
 }

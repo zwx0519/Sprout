@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="submitClick"
+            type="com.sprout.ui.oasis.issue.SubmitMoreActivity.SubmitClickEvt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,15 +29,45 @@
                     android:layout_height="@dimen/dp_60"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <ImageView
+                        android:id="@+id/img_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:src="@mipmap/titlebar_back"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_draft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:background="@drawable/txt_traft_broder"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_5"
+                        android:text="草稿"
+                        android:textColor="#6F9870"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/tv_submit_more"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/tv_submit_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:background="@drawable/txt_submit_bg"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="发布"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="@dimen/dp_10" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="@{(view)->submitClick.submit()}"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -47,41 +79,91 @@
                 <EditText
                     android:id="@+id/et_submit_more_title"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_30" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:hint="写下标题更容易被推荐"
+                    android:paddingVertical="@dimen/dp_10"
+                    android:textSize="@dimen/sp_18"
+                    android:background="@drawable/edittext_broder"
+                    />
 
                 <EditText
                     android:id="@+id/et_submit_more_mood"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_100" />
-
+                    android:layout_height="@dimen/dp_100"
+                    android:gravity="top"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:hint="写下此时此刻的想法···"
+                    android:textSize="@dimen/sp_16"
+                    android:paddingVertical="@dimen/dp_10"
+                    android:background="@drawable/edittext_broder"
+                    />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40">
+                    android:layout_height="@dimen/dp_40"
+                    android:onClick="@{()->submitClick.clickChannel()}"
+                    >
+                    <TextView
+                        android:id="@+id/tv_submit_more_channel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="发布频道"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:src="@mipmap/icon_detail_wow_more"
+                        android:layout_marginRight="@dimen/dp_20"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:onClick="@{()->submitClick.clickTheme()}">
 
                     <TextView
                         android:id="@+id/tv_submit_more_theme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="添加主题"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent" />
-
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:src="@mipmap/icon_detail_wow_more"
+                        android:layout_marginRight="@dimen/dp_20"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40">
+                    android:layout_height="@dimen/dp_40"
+                    android:onClick="@{()->submitClick.clickAddress()}">
 
                     <TextView
                         android:id="@+id/tv_submit_more_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="你的位置"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent" />
-
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:src="@mipmap/icon_detail_wow_more"
+                        android:layout_marginRight="@dimen/dp_20"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <HorizontalScrollView

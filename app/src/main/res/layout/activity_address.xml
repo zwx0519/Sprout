@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="addressClick"
+            type="com.sprout.adapter.oasis.issue.submit.AddressActivity.ClickEvt" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".adapter.oasis.issue.submit.AddressActivity">
+
+        <TextView
+            android:id="@+id/txt_noAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不显示位置"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:onClick="@{()->addressClick}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintTop_toBottomOf="@id/txt_noAddress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/dp_20" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

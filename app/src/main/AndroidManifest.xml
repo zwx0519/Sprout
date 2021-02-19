@@ -17,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.oasis.issue.SubmitMoreActivity"></activity>
+        <activity android:name=".adapter.oasis.issue.submit.AddressActivity"></activity>
+        <activity android:name=".ui.oasis.issue.submit.ThemeActivity" />
+        <activity android:name=".ui.oasis.issue.submit.ChannelActivity" />
+        <activity android:name=".ui.oasis.issue.SubmitMoreActivity" />
         <activity android:name=".ui.oasis.guidance.Interset_Recommend_Activity" />
         <activity android:name=".ui.oasis.guidance.InterestActivity" />
         <activity android:name=".ui.oasis.guidance.SexActivity" />
@@ -32,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.oasis.guidance.IntroductionActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

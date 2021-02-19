@@ -1,5 +1,7 @@
 package com.shop.base
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +15,16 @@ abstract class BaseFragment<VM:BaseViewModel,DB:ViewDataBinding>(var layoutId:In
 
     protected lateinit var mViewModel:VM
     protected lateinit var mDataBinding:DB
+    protected lateinit var mActivity: Activity
+    protected lateinit var mContext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mActivity = activity!!
+        mContext = this.context!!
         mDataBinding = DataBindingUtil.inflate(inflater,layoutId,container,false)
         mViewModel = ViewModelProvider(this).get(vmClass)
         var mView = mDataBinding.root

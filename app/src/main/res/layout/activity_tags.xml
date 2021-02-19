@@ -3,63 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="tagClick"
-            type="com.sprout.ui.oasis.issue.TagsActivity.TagsClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/iv_tags_brand_img"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/iv_tags_good_img"
-            android:src="@mipmap/tag_icon_w_brand"
-            android:onClick="@{()->tagClick.click(1)}"
-             />
-
-        <ImageView
-            android:id="@+id/iv_tags_good_img"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintLeft_toRightOf="@id/iv_tags_brand_img"
-            app:layout_constraintRight_toLeftOf="@id/iv_tags_user_img"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@mipmap/tag_icon_w_commodity"
-            android:onClick="@{()->tagClick.click(2)}"
-             />
-
-        <ImageView
-            android:id="@+id/iv_tags_user_img"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintLeft_toRightOf="@id/iv_tags_good_img"
-            app:layout_constraintRight_toLeftOf="@id/iv_tags_address_img"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@mipmap/tag_icon_user"
-            android:onClick="@{()->tagClick.click(3)}"/>
-
-        <ImageView
-            android:id="@+id/iv_tags_address_img"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/iv_tags_user_img"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@mipmap/tag_icon_w_location"
-            android:onClick="@{()->tagClick.click(4)}"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mRlv_tags"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_tags"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
-            app:layout_constraintTop_toBottomOf="@id/iv_tags_brand_img"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tab_tags"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

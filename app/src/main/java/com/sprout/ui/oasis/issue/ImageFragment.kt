@@ -13,6 +13,7 @@ import com.example.kotlinbase.bean.issue.ImgData
 import com.sprout.R
 import kotlinx.android.synthetic.main.fragment_image.*
 
+//TODO 编辑页面图片展示的fragment以及做标签处理
 class ImageFragment (var index:Int, var path:String, var tags:MutableList<ImgData.Tag>):Fragment(){
 
     //伴生对象
@@ -43,10 +44,10 @@ class ImageFragment (var index:Int, var path:String, var tags:MutableList<ImgDat
             1-> imgTag.setImageResource(R.mipmap.tag_icon_w_brand)
             2-> imgTag.setImageResource(R.mipmap.tag_icon_w_commodity)
         }
-        var param = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        var param = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
         param.setMargins(0,0,0,0) //控制组件的坐标位置
         view.setOnTouchListener(layout_tags)
-        var tag = ImgData.Tag(0f,0f,type,name,0.0, 0.0)
+        var tag = ImgData.Tag(0,0f,0f,type,name,0.0, 0.0)
         tags.add(tag)
         view.tag = tag
         layout_tags.addView(view,param)

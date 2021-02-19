@@ -26,5 +26,4 @@ class Issue_GoodAdapter(
         var txt = binding.root.findViewById<TextView>(R.id.tv_good_item_name)
         txt.setText(data.name)
     }
-
 }

@@ -30,6 +30,7 @@ class TagsLayout:FrameLayout,View.OnTouchListener {
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when(event!!.action){
+            //抬起的时候
             MotionEvent.ACTION_DOWN -> {
                 if(v is ConstraintLayout){
                     curView = v
@@ -37,6 +38,7 @@ class TagsLayout:FrameLayout,View.OnTouchListener {
                     startY = event.getRawY().toInt()
                 }
             }
+            //按下的时候
             MotionEvent.ACTION_MOVE -> {
                 if(curView != null){
                     var x:Int = event.getRawX().toInt()
