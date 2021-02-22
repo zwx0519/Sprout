@@ -16,11 +16,13 @@ class SubmitViewModel : BaseViewModel(Injection.repository){
         var body = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),json)
         viewModelScope.launch {
             var result = repository.submitTrends(body)
-            /*if(result.errno == 0){
+            if(result.errno == 0){
                 state.postValue(200)
+            }else if(result.errno == 603){
+                state.postValue(-2)  //token无效
             }else{
                 state.postValue(-1)
-            }*/
+            }
         }
     }
 }

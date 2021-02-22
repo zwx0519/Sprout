@@ -13,7 +13,8 @@ class Constants {
 
         //网络缓存的地址
      //   val PATH_DATA = MyApp.app!!.cacheDir.absolutePath + File.separator + "data"
-
+        val token_key = "token_key"
+        val token:String = "token"
     }
 
 }

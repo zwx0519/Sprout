@@ -9,7 +9,9 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.example.basemvvm.utils.MyMmkv
 import com.google.android.material.tabs.TabLayout
+import com.shop.app.Constants
 import com.shop.base.BaseFragment
 import com.sprout.R
 import com.sprout.databinding.FragmentHomeBinding
@@ -48,6 +50,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>
     }
 
     override fun initData() {
+
     }
 
 

@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.basemvvm.utils.MyMmkv
 import com.example.basemvvm.utils.SpUtils
 import com.shop.app.Constants
+import com.shop.app.MyApp
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -28,10 +29,11 @@ class RetrofitFactory {
     init {
         //通用拦截
         interceptor = Interceptor {
-            chain -> val request = chain.request()
-                .newBuilder()
-                .addHeader("charset","UTF-8")
-                .build()
+                chain -> val request = chain.request()
+            .newBuilder()
+            .addHeader("charset","UTF-8")
+            .addHeader(MyMmkv.getString(Constants.token_key),MyMmkv.getString(Constants.token))
+            .build()
             chain.proceed(request)
         }
 

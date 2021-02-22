@@ -3,6 +3,8 @@ package com.sprout.ui.oasis
 import android.content.Intent
 import android.view.View
 import androidx.fragment.app.FragmentManager
+import com.example.basemvvm.utils.MyMmkv
+import com.shop.app.Constants
 import com.shop.base.BaseActivity
 import com.sprout.R
 import com.sprout.databinding.ActivityOasisBinding
@@ -50,6 +52,12 @@ class OasisActivity : BaseActivity<OasisViewModel, ActivityOasisBinding>
     }
 
     override fun initData() {
+        //模拟已经登录
+        MyMmkv.setValue("uid","7fc32459-bcd6-4ab6-95f7-0c43728b2b0b")
+        MyMmkv.setValue(Constants.token_key,"sprout-token")
+        MyMmkv.setValue(
+            Constants.token,
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2ZjMzI0NTktYmNkNi00YWI2LTk1ZjctMGM0MzcyOGIyYjBiIiwicmFuZG9tIjoiNThoamlxNHBqMiIsImlhdCI6MTYxMzkyNDE1MH0.lk6htOFTvwpx4fcL54twmUZmXog2dNLw0tc-vw9tI7w")
 
     }
 

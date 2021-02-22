@@ -15,12 +15,8 @@ class LocalViewModel : BaseViewModel(Injection.repository) {
         //TODO 调用数据仓库需要协程产生一个联系
         viewModelScope.launch {
             var result = repository.getLocal_Channel()
-
             if(result.errno == 0){
                 Local_Channel.postValue(result.data)
-                Log.e("TAG",result.data.toString())
-            }else{
-                Log.e("TAG", "MeUserInfo: "+result.errmsg )
             }
         }
     }

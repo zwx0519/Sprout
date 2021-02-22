@@ -12,32 +12,23 @@
         android:layout_height="match_parent"
         tools:context=".ui.oasis.home.local.LocalFragment">
 
-        <androidx.core.widget.NestedScrollView
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/mTab_home_local"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/dp_50"
+            app:layout_constraintBottom_toTopOf="@+id/mVp_home_local"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabIndicatorColor="@color/green_home"
+            app:tabMode="scrollable" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mVp_home_local"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mTab_home_local" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/mTab_home_local"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabIndicatorColor="@color/green_home"
-                    app:tabIndicator="@drawable/tab_indicator"
-                    app:layout_constraintBottom_toTopOf="@+id/mVp_home_local"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tabMode="scrollable" />
-
-                <com.shop.utils.CustomViewPager
-                    android:id="@+id/mVp_home_local"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mTab_home_local" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

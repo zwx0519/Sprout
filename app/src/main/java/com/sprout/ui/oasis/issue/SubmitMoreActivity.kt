@@ -1,16 +1,28 @@
 package com.sprout.ui.oasis.issue
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Rect
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.sdk.android.oss.ClientConfiguration
+import com.alibaba.sdk.android.oss.ClientException
 import com.alibaba.sdk.android.oss.OSSClient
+import com.alibaba.sdk.android.oss.ServiceException
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask
+import com.alibaba.sdk.android.oss.model.PutObjectRequest
+import com.alibaba.sdk.android.oss.model.PutObjectResult
+import com.example.basemvvm.utils.MyMmkv
+import com.example.kotlinbase.app.Global
 import com.example.kotlinbase.bean.issue.ImgData
 import com.example.kotlinbase.model.myitem.IItemClick
 import com.google.gson.Gson
@@ -27,7 +39,12 @@ import com.sprout.utils.GlideEngine
 import com.sprout.viewmodel.oasis.issue.SubmitViewModel
 import com.sprout.ui.oasis.issue.submit.ChannelActivity
 import com.sprout.ui.oasis.issue.submit.ThemeActivity
+import com.sprout.utils.BitmapUtils
 import kotlinx.android.synthetic.main.activity_submit_more.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -104,9 +121,11 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
             if (json!!.isNotEmpty()) {
                 //上一个页面传过来的json字符串数据进行转换
                 var jsonArr = JSONArray(json)
-                for (i in 0 until jsonArr.length()) {
-                    var imgData =
-                        Gson().fromJson<ImgData>(jsonArr.getString(i), ImgData::class.java)
+                for(i in 0 until jsonArr.length()){
+                    var imgData = Gson().fromJson<ImgData>(
+                        jsonArr.getString(i),
+                        ImgData::class.java
+                    )
                     imgs.add(imgData)
                 }
                 //处理加号
@@ -187,19 +206,8 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
         }
     }
 
-
-    //TODO item条目的点击
-    inner class ItemClick: IItemClick<ImgData> {
-        override fun itemClick(data: ImgData) {
-            //当前点击的是加号
-            if(data.path.isNullOrEmpty()){
-                openPhoto()
-            }
-        }
-    }
-
     //TODO 组装提交的内容
-    fun getSubmitJson():String{
+    fun getSubmitJson(arr: List<String>):String{
         var title = et_submit_more_title.toString()
         var mood =et_submit_more_mood.toString()
         var json: JSONObject = JSONObject()
@@ -215,8 +223,9 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
         when(type){
             1 -> { //图片
                 for (i in 0 until imgs.size) {
+                    if(imgs.get(i).path.isNullOrEmpty()) continue
                     var img = JSONObject()
-                    img.put("url", imgs[i].path)
+                    img.put("url", arr[i])
                     var tags = JSONArray()
                     img.put("tags", tags)
                     for (j in 0 until imgs[i].tags.size) {
@@ -231,14 +240,14 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
                         tag.put("lat", tagItem.lat)
                         tags.put(tag)
                     }
-                    json.put("res", res)
+                    res.put(img)
                 }
+                json.put("res", res)
             }
             2 -> {
 
             }
         }
-
         return json.toString()
     }
 
@@ -256,6 +265,16 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
                 outRect.set(0, 10, 10, 10)
             }else{
                 outRect.set(10, 10, 10, 10)
+            }
+        }
+    }
+
+    //TODO item条目的点击
+    inner class ItemClick: IItemClick<ImgData> {
+        override fun itemClick(data: ImgData) {
+            //当前点击的是加号
+            if(data.path.isNullOrEmpty()){
+                openPhoto()
             }
         }
     }
@@ -286,26 +305,105 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
             startActivityForResult(intent, CODE_ADDRESS)//返回值
         }
 
+        //当前显示的本地图片的数据
         var imgArr:MutableList<String> = mutableListOf()
+        //上传成功的图片路径数据
+        var urlArr:MutableList<String> = mutableListOf()
 
         //TODO 提交发布数据
         fun submit(){
+            if(!checkSubmitValue()) return
             for(i in 0 until imgs.size){
-                imgArr.add(imgs.get(i).path!!)
-            }
-            //第一步先上传图片资源到资源服务器
-            if(imgs.size > 0) {
-                //rxjava zip 操作解决多个异步任务完成的监听
-                for (i in 0 until imgs.size) {
-                    //图片i - 上传
-                    checkUpload(imgs.get(i).path!!)
+                if(!imgs.get(i).path.isNullOrEmpty()){
+                    imgArr.add(imgs.get(i).path!!)
                 }
-                var content = getSubmitJson()
-                mViewModel.submitTrends(content)
+            }
+            urlArr.clear()
+            //第一步先上传图片资源到资源服务器
+            if(imgs.size > 0){
+                GlobalScope.launch(Dispatchers.Unconfined) {
+                    //rxjava zip 操作解决多个异步任务完成的监听
+                    for(i in 0 until imgs.size){
+                        if(!imgs.get(i).path.isNullOrEmpty()){
+                            //图片i - 上传
+                            uploadImg(imgs.get(i).path!!)
+                        }
+                    }
+                }
+                //创建协程
+                runBlocking {
+                    // 自定义线程池
+                    /*val coroutineDispatcher = Executors.newFixedThreadPool(4).asCoroutineDispatcher()
+                    launch {
+
+                    }.join() //等待协程执行*/
+
+                    //coroutineDispatcher.close() //关闭自定义线程池
+                }
             }
         }
 
-        fun checkUpload(path:String){
+        //上传招聘协程
+        suspend fun uploadImg(path: String){
+            val scaleBitmp: Bitmap = BitmapUtils.getScaleBitmap(path, Global.IMG_WIDTH, Global.IMG_HEIGHT)
+
+            // 上传图片
+            val bytes: ByteArray = BitmapUtils.getBytesByBitmap(scaleBitmp)
+            //获取Uid
+            val uid: String = MyMmkv.getString("uid")!!
+            //获取文件名字
+            val fileName = uid + "/" + System.currentTimeMillis() + Math.random() * 10000 + ".png"
+            val put = PutObjectRequest(bucketName, fileName, bytes)
+            put.setProgressCallback(object : OSSProgressCallback<PutObjectRequest> {
+                override fun onProgress(
+                    request: PutObjectRequest?,
+                    currentSize: Long,
+                    totalSize: Long
+                ) {
+                    //上传进度
+                    Log.i("oss_upload", "$currentSize/$totalSize")
+                }
+            })
+
+            val task: OSSAsyncTask<*> = ossClient.asyncPutObject(
+                put,
+                object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
+                    override fun onSuccess(request: PutObjectRequest, result: PutObjectResult) {
+                        Log.d("PutObject", "UploadSuccess")
+                        Log.d("ETag", result.eTag)
+                        Log.d("RequestId", result.requestId)
+                        //成功的回调中读取相关的上传文件的信息  生成一个url地址
+                        val url = ossClient.presignPublicObjectURL(
+                            request.bucketName,
+                            request.objectKey
+                        )
+                        checkUpload(path, url)
+                    }
+
+                    override fun onFailure(
+                        request: PutObjectRequest,
+                        clientExcepion: ClientException,
+                        serviceException: ServiceException
+                    ) {
+                        // 请求异常。
+                        if (clientExcepion != null) {
+                            // 本地异常，如网络异常等。
+                            clientExcepion.printStackTrace()
+                        }
+                        if (serviceException != null) {
+                            // 服务异常。
+                            Log.e("ErrorCode", serviceException.errorCode)
+                            Log.e("RequestId", serviceException.requestId)
+                            Log.e("HostId", serviceException.hostId)
+                            Log.e("RawMessage", serviceException.rawMessage)
+                        }
+                    }
+                })
+        }
+
+        //TODO 检查图片舒服上传完
+        fun checkUpload(path: String, url: String){
+            urlArr.add(url)
             for(i in 0 until imgArr.size){
                 if(imgArr.get(i).equals(path)){
                     imgArr.removeAt(i)
@@ -313,9 +411,40 @@ class SubmitMoreActivity : BaseActivity<SubmitViewModel, ActivitySubmitMoreBindi
                 }
             }
             if(imgArr.size == 0){
-                var content = getSubmitJson()
+                var content = getSubmitJson(urlArr)
                 mViewModel.submitTrends(content)
             }
         }
+
+        //TODO 检查提交的数据是否已经准备就绪
+        fun checkSubmitValue():Boolean{
+            var bool = true
+            if(imgs.size <= 1){  //当前是否有资源文件
+                Toast.makeText(mContext,"没有准备好资源文件", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            //判断当前是否选择频道
+            if(channelId <= 0){
+                Toast.makeText(mContext,"请选择对应的频道", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            //判断当前是否选择主题
+            if(themeId <= 0){
+                Toast.makeText(mContext,"请选择对应的主题", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            var titleStr = et_submit_more_title.text.toString()
+            if(titleStr.isNullOrEmpty()){
+                Toast.makeText(mContext,"请输入对应的标题", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            var mood = et_submit_more_mood.text.toString()
+            if(mood.isNullOrEmpty()){
+                Toast.makeText(mContext,"请输入心情", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            return bool
+        }
+
     }
 }
