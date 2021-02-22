@@ -57,7 +57,7 @@ class OasisActivity : BaseActivity<OasisViewModel, ActivityOasisBinding>
         MyMmkv.setValue(Constants.token_key,"sprout-token")
         MyMmkv.setValue(
             Constants.token,
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2ZjMzI0NTktYmNkNi00YWI2LTk1ZjctMGM0MzcyOGIyYjBiIiwicmFuZG9tIjoiNThoamlxNHBqMiIsImlhdCI6MTYxMzkyNDE1MH0.lk6htOFTvwpx4fcL54twmUZmXog2dNLw0tc-vw9tI7w")
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2ZjMzI0NTktYmNkNi00YWI2LTk1ZjctMGM0MzcyOGIyYjBiIiwicmFuZG9tIjoiNmdyY2R1NDI0cyIsImlhdCI6MTYxMzk4ODI1OX0.Q5B83YCJx2nE9FIvGtzgw86rJO3LZu9RRVGwgSIhi0o")
 
     }
 

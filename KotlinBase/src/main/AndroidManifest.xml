@@ -4,4 +4,5 @@
     <meta-data
         android:name="com.example.kotlinbase.app.CustomGlideModule"
         android:value="AppGlideModule"/>
+
 </manifest>

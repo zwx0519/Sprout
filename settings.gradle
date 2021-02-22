@@ -1,3 +1,4 @@
+include ':video'
 include ':KotlinBase'
 include ':app'
 rootProject.name = "Sprout"

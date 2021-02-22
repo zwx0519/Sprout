@@ -1,5 +1,6 @@
 package com.sprout.viewmodel.oasis.issue
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.shop.base.BaseViewModel
@@ -16,6 +17,7 @@ class SubmitViewModel : BaseViewModel(Injection.repository){
         var body = RequestBody.create(MediaType.parse("application/json;charset=utf-8"),json)
         viewModelScope.launch {
             var result = repository.submitTrends(body)
+            Log.e("TAG",result.toString())
             if(result.errno == 0){
                 state.postValue(200)
             }else if(result.errno == 603){

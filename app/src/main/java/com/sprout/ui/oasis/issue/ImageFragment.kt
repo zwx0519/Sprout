@@ -14,7 +14,8 @@ import com.sprout.R
 import kotlinx.android.synthetic.main.fragment_image.*
 
 //TODO 编辑页面图片展示的fragment以及做标签处理
-class ImageFragment (var index:Int, var path:String, var tags:MutableList<ImgData.Tag>):Fragment(){
+class ImageFragment
+    (var index:Int, var path:String, var tags:MutableList<ImgData.Tag>):Fragment(){
 
     //伴生对象
     companion object{
