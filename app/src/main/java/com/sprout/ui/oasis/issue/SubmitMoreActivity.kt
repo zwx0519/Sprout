@@ -363,6 +363,7 @@ class SubmitMoreActivity:BaseActivity<SubmitViewModel, ActivitySubmitMoreBinding
          */
         fun submit(){
             if(!checkSubmitValue()) return
+            //把除了加号按钮以外的数据提取出来
             for(i in 0 until imgs.size){
                 if(!imgs.get(i).path.isNullOrEmpty()){
                     imgArr.add(imgs.get(i).path!!)
@@ -371,6 +372,7 @@ class SubmitMoreActivity:BaseActivity<SubmitViewModel, ActivitySubmitMoreBinding
             urlArr.clear()
             //第一步先上传图片资源到资源服务器
             if(imgs.size > 0){
+                //创建协程
                 GlobalScope.launch(Dispatchers.Unconfined) {
                     for(i in 0 until imgs.size){
                         if(!imgs.get(i).path.isNullOrEmpty()){
@@ -394,9 +396,9 @@ class SubmitMoreActivity:BaseActivity<SubmitViewModel, ActivitySubmitMoreBinding
                 Global.IMG_HEIGHT
             )
             // 上传图片
-            // 上传图片
             val bytes: ByteArray = BitmapUtils.getBytesByBitmap(scaleBitmp)
             val uid: String = MyMmkv.getString("uid")!!
+            //文件名字
             val fileName = uid + "/" + System.currentTimeMillis() + Math.random() * 10000 + ".png"
             val put = PutObjectRequest(bucketName, fileName, bytes)
             put.setProgressCallback(object : OSSProgressCallback<PutObjectRequest> {
@@ -419,10 +421,7 @@ class SubmitMoreActivity:BaseActivity<SubmitViewModel, ActivitySubmitMoreBinding
                         Log.d("ETag", result.eTag)
                         Log.d("RequestId", result.requestId)
                         //成功的回调中读取相关的上传文件的信息  生成一个url地址
-                        val url = ossClient.presignPublicObjectURL(
-                            request.bucketName,
-                            request.objectKey
-                        )
+                        val url = ossClient.presignPublicObjectURL(request.bucketName, request.objectKey)
                         checkUpload(path, url)
                     }
 

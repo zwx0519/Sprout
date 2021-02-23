@@ -5,11 +5,15 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.iknow.android.interfaces.VideoTrimListener;
 import iknow.android.utils.DeviceUtil;
 import iknow.android.utils.UnitConverter;
 import iknow.android.utils.callback.SingleCallback;
 import iknow.android.utils.thread.BackgroundExecutor;
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -66,6 +70,14 @@ public class VideoTrimmerUtil {
     String[] command = cmd.split(" ");
     try {
       final String tempOutFile = outputFile;
+      File file= new File(inputFile);
+      if(file.exists()){
+        Log.i("","文件存在");
+      }
+      File outfile= new File(outputFile);
+      if(!outfile.exists()){
+       outfile.createNewFile();//创建文件
+      }
       FFmpeg.getInstance(context).execute(command, new ExecuteBinaryResponseHandler() {
 
         @Override public void onSuccess(String s) {
