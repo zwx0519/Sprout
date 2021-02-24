@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.example.basemvvm.utils.MyMmkv
 import iknow.android.utils.BaseUtils
+import nl.bravobit.ffmpeg.FFmpeg
 import java.util.*
 
 class MyApp: Application() {
@@ -23,9 +24,9 @@ class MyApp: Application() {
 
     //ffmpeg库的初始化
     private fun initFFmpegBinary(context: Context) {
-//        if (!FFmpeg.getInstance(context).isSupported) {
-//            Log.e("ZApplication", "Android cup arch not supported!")
-//        }
+        if (!FFmpeg.getInstance(context).isSupported) {
+            Log.e("ZApplication", "Android cup arch not supported!")
+        }
     }
 
     companion object{

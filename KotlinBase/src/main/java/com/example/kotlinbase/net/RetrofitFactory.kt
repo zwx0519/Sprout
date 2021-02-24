@@ -28,8 +28,7 @@ class RetrofitFactory {
     //初始化
     init {
         //通用拦截
-        interceptor = Interceptor {
-                chain -> val request = chain.request()
+        interceptor = Interceptor { chain -> val request = chain.request()
             .newBuilder()
             .addHeader("charset","UTF-8")
             .addHeader(MyMmkv.getString(Constants.token_key),MyMmkv.getString(Constants.token))

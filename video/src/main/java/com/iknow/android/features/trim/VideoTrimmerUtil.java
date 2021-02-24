@@ -70,14 +70,14 @@ public class VideoTrimmerUtil {
     String[] command = cmd.split(" ");
     try {
       final String tempOutFile = outputFile;
-      File file= new File(inputFile);
-      if(file.exists()){
-        Log.i("","文件存在");
-      }
-      File outfile= new File(outputFile);
-      if(!outfile.exists()){
-       outfile.createNewFile();//创建文件
-      }
+//      File file= new File(inputFile);
+//      if(file.exists()){
+//        Log.i("","文件存在");
+//      }
+//      File outfile= new File(outputFile);
+//      if(!outfile.exists()){
+//       outfile.createNewFile();//创建文件
+//      }
       FFmpeg.getInstance(context).execute(command, new ExecuteBinaryResponseHandler() {
 
         @Override public void onSuccess(String s) {
